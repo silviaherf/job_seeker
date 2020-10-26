@@ -2,7 +2,8 @@
 
 ***In progress***
 
-As finding new opportunities is a tedious task, I found it interesting to develop a script in Python to help me these days.
+As finding new opportunities is a tedious task, I found it interesting to develop a script in Python to help me these days. The idea is to directly find new vacancies by web scrapping the main job search websites in Spain with Selenium.
+
 Stay tunned for further information!
 
-![image](https://instintobinario.com/wp-content/uploads/2018/04/2304_0-769x360.jpg)
+![image](input/job.jpeg)
