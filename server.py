@@ -1,8 +1,8 @@
-from src import app
+from src.app import app
 import os
-import dotenv
+from dotenv import load_dotenv
+load_dotenv(dotenv_path='src/.env')
 
-dotenv.load_dotenv()
 
 PORT = os.getenv("PORT")
 
