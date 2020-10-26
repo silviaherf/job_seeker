@@ -1,4 +1,5 @@
 from flask import Flask
+from Flask import request
 import src.data_extraction as extract
 
 
@@ -13,5 +14,7 @@ def hello():
 
 @app.route('/search')
 def jobs_searching():
+    
     extract.jobs_scrapping()
+
 
