@@ -6,4 +6,4 @@ As finding new opportunities is a tedious task, I found it interesting to develo
 
 Stay tunned for further information!
 
-![image](input/job.jpeg)
+![image](static/job.jpeg)
