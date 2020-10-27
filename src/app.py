@@ -1,5 +1,4 @@
-from flask import Flask
-from Flask import request
+from flask import Flask,request
 import src.data_extraction as extract
 
 
