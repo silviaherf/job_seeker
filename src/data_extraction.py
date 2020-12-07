@@ -14,10 +14,10 @@ from pyvirtualdisplay import Display
 def jobs_scrapping(key='data',city='Madrid'):
 
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--window-size=1420,1080')
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--disable-gpu')
+    #chrome_options.add_argument('--no-sandbox')
+    #chrome_options.add_argument('--window-size=1420,1080')
+    #chrome_options.add_argument('--headless')
+    #chrome_options.add_argument('--disable-gpu')
 
     CHROME_PATH = os.getenv("CHROME_PATH")
     driver = webdriver.Chrome(CHROME_PATH, chrome_options=chrome_options)
@@ -37,14 +37,17 @@ def jobs_scrapping(key='data',city='Madrid'):
     time.sleep(0.5)
 
 
-    jobs=driver.find_element(By.XPATH,'//*[@id="ember26"]')
+    #jobs=driver.find_element(By.XPATH,'//*[@id="global-nav-icon--mercado__jobs"]/path')
+    jobs = driver.find_element_by_link_text('Empleos')
+    
+    
     #jobs=driver.find_element_by_link_text('/jobs/')
     time.sleep(0.3)
     jobs.click()
     time.sleep(0.3)
 
     #key_find=driver.find_element_by_class_name('jobs-search-box__inner ember-view')
-    key_find=driver.find_element_by_id('//*[@id="ember1921"]')
+    key_find=driver.find_element_by_xpath('//*[@id="ember1921"]')
     #key_find=driver.find_element_by_xpath("//*[contains(@id,'jobs-search-box-keyword-id-ember')]")
     """
     <input id="jobs-search-box-keyword-id-ember1918" class="jobs-search-box__text-input" 
