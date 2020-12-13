@@ -19,6 +19,7 @@ def jobs_scrapping(key='data',city='Madrid'):
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-gpu')
 
+
     CHROME_PATH = os.getenv("CHROME_PATH")
     driver = webdriver.Chrome(CHROME_PATH, chrome_options=chrome_options)
     driver.get('https://www.linkedin.com/login/es?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin')
@@ -39,6 +40,7 @@ def jobs_scrapping(key='data',city='Madrid'):
 
 
     jobs = driver.find_element_by_link_text('Empleos')
+    #jobs=driver.find_element_by_xpath("//*[@href='/jobs/']")
     time.sleep(0.3)
     jobs.click()
     time.sleep(0.3)
@@ -46,19 +48,19 @@ def jobs_scrapping(key='data',city='Madrid'):
    
     
     
-    key_find=driver.find_element_by_xpath("//*[@class='ember-view']/input[1]")
+    key_find=driver.find_element_by_xpath("//*[@class='ember-view'][@aria-label='Busca por cargo, aptitud o empresa']/input[1]")
     key_find.clear()
     key_find.send_keys(key)
     time.sleep(0.3)
 
 
-#Pendiente revisar city
-    city=driver.find_element_by_xpath("//*[contains(@id,'jobs-search-box-location-id-ember')]")
-    city.clear()
-    city.send_keys(city)
-
+    key_city=driver.find_element_by_xpath("//*[@class='ember-view'][@aria-label='Ciudad, provincia o código postal']/input[1]")
+    key_city.clear()
+    key_city.send_keys(city)
     time.sleep(0.3)
-    find=driver.find_element(By.CLASS_NAME,'jobs-search-box__submit-button artdeco-button artdeco-button--3 jobs-home-soho__mvp-button')
+
+
+    find=driver.find_element_by_xpath("//button[@type='submit']")
     time.sleep(0.3)
     find.click()
 
