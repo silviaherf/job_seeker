@@ -1,5 +1,6 @@
 from flask import Flask,request
 import src.data_extraction as extract
+from src.data_extraction import Linkedin
 
 
 app = Flask("job_seeker")
@@ -14,6 +15,7 @@ def hello():
 @app.route('/search')
 def jobs_searching():
     
-    extract.jobs_scrapping()
-
+    buscar=Linkedin()
+    buscar.jobs_scrapping('data','Madrid')
+    buscar.apply()
 
