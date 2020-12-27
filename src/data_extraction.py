@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 import time
 import re
 import os
@@ -14,11 +15,6 @@ from pyvirtualdisplay import Display
 
 class Linkedin:
     def __init__(self):
-        self.data=[]
-
-
-    def jobs_scrapping(self,key='data',city='Madrid'):
-
         chrome_options = webdriver.ChromeOptions()
         #chrome_options.add_argument('--no-sandbox')
         #chrome_options.add_argument('--window-size=1420,1080')
@@ -30,7 +26,9 @@ class Linkedin:
         self.driver = webdriver.Chrome(CHROME_PATH, chrome_options=chrome_options)
         self.driver.get('https://www.linkedin.com/login/es?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin')
         time.sleep(2)
-    
+
+
+    def jobs(self,key='data',city='Madrid'):
         #We login
 
         username = self.driver.find_element_by_name('session_key')
@@ -70,7 +68,7 @@ class Linkedin:
         key_city.send_keys('\n')
         time.sleep(0.3)
 
-        """
+    def filters(self):
         #We filter for the latest jobs
         find = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "//button[@aria-label='Filtro «Fecha de publicación». Al hacer clic en este botón, se muestran todas las opciones del filtro «Fecha de publicación».']"))
@@ -79,28 +77,37 @@ class Linkedin:
         time.sleep(0.3)
         
         find.click()
+      
         
-        time_step=WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//input[@name='Últimas 24 horas']"))
-        )
-        
-        time_step=self.driver.find_element(By.XPATH,"//input[@name='Últimas 24 horas']")
+        actions = ActionChains(self.driver)
+        actions.move_to_element_with_offset(self.driver.find_element(By.XPATH, "//input[@name='Últimas 24 horas']"), 5,5).click().perform()
         time.sleep(0.3)
-        #time_step.send_keys('\n')
-        time_step.click()
-        """
-
-
-    def apply(self):
 
         #We filter for jobs with the the easy application option 
-
         funcionalities=self.driver.find_element(By.XPATH, "//button[@aria-label='Todos los filtros']")
         funcionalities.click()
 
+        actions = ActionChains(self.driver)
+        actions.move_to_element_with_offset(self.driver.find_element(By.XPATH, "//input[@name='Solicitud sencilla']"), 5,7).click().perform()
 
-        #self.driver.close()
+
+    def more_jobs(self):
+        #We look up through every page of results
+        n=self.driver.find_element_by_xpath("//ul[@class='artdeco-pagination__pages artdeco-pagination__pages--number']/li[last()]")
+        for i in range (1,n-1):
+            self.driver.find_element(By.XPATH, "//button[@aria-label=f'Página {i+1}']").click()
+
+            
+        
+
+
+
+
+    def apply(self):
         pass
+        #self.driver.close()
+        
+        
 
     
    
