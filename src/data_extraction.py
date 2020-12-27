@@ -93,14 +93,10 @@ class Linkedin:
 
     def more_jobs(self):
         #We look up through every page of results
-        n=self.driver.find_element_by_xpath("//ul[@class='artdeco-pagination__pages artdeco-pagination__pages--number']/li[last()]")
+        numero=self.driver.find_element_by_xpath("//ul/li[last()]/button[1]").get_attribute("aria-label")
+        n=int(re.findall(r'\d+',numero)[0])
         for i in range (1,n-1):
-            self.driver.find_element(By.XPATH, "//button[@aria-label=f'Página {i+1}']").click()
-
-            
-        
-
-
+            self.driver.find_element(By.XPATH, f"//button[@aria-label=f'Página {i+1}']").click()
 
 
     def apply(self):
