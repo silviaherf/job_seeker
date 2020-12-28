@@ -28,7 +28,7 @@ class Linkedin:
         time.sleep(2)
 
 
-    def jobs(self,key='data',city='Madrid'):
+    def jobs(self,keyword='data',location='Madrid'):
         #We login
 
         username = self.driver.find_element_by_name('session_key')
@@ -58,13 +58,13 @@ class Linkedin:
         
         key_find.clear()
         time.sleep(0.3)
-        key_find.send_keys(key)
+        key_find.send_keys(keyword)
         time.sleep(0.3)
 
 
         key_city=self.driver.find_element_by_xpath("//*[@class='ember-view'][@aria-label='Ciudad, provincia o código postal']/input[1]")
         key_city.clear()
-        key_city.send_keys(city)
+        key_city.send_keys(location)
         key_city.send_keys('\n')
         time.sleep(0.3)
 
@@ -88,15 +88,22 @@ class Linkedin:
         funcionalities.click()
 
         actions = ActionChains(self.driver)
-        actions.move_to_element_with_offset(self.driver.find_element(By.XPATH, "//input[@name='Solicitud sencilla']"), 5,7).click().perform()
+        actions.move_to_element_with_offset(self.driver.find_element(By.XPATH, "//input[@name='Solicitud sencilla']"), 3,3).click().perform()
 
 
     def more_jobs(self):
         #We look up through every page of results
-        numero=self.driver.find_element_by_xpath("//ul/li[last()]/button[1]").get_attribute("aria-label")
-        n=int(re.findall(r'\d+',numero)[0])
-        for i in range (1,n-1):
-            self.driver.find_element(By.XPATH, f"//button[@aria-label=f'Página {i+1}']").click()
+        time.sleep(0.3)
+        button = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//ul/li[last()]/button[1]'))
+        )
+        atts=button.get_property('attributes')
+        n=atts[0]['TEXT_NODE']
+
+        #n=int(re.findall(r'\d+',numero)[0])
+        for i in range (2,n):
+            self.driver.find_element(By.XPATH, "//button[@aria-label=f'Página {i}']").click()
+          
 
 
     def apply(self):

@@ -12,9 +12,15 @@ def hello():
     return cover
 
 
-@app.route('/search',methods=['GET', 'POST'])
+@app.route("/search")
+def ask_jobs():
+    search = open('src/html/buscar.html', 'r', encoding='utf-8').read() 
+    return search
+
+
+
+@app.route('/search/jobs',methods=['GET', 'POST'])
 def jobs_searching():
-   
     buscar=Linkedin()
     if request.method == 'POST':
         keyword=request.form.get("keyword")
@@ -25,7 +31,8 @@ def jobs_searching():
         keyword=request.args.get("keyword")
         location=request.args.get("location")
 
-    buscar.jobs(keyword,location)
+
+    buscar.jobs(keyword=keyword,location=location)
     buscar.filters()
     buscar.more_jobs()
     buscar.apply()
