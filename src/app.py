@@ -25,15 +25,24 @@ def jobs_searching():
     if request.method == 'POST':
         keyword=request.form.get("keyword")
         location=request.form.get("location")
+        easy_apply=request.form.get("easy_apply")
+        remote=request.form.get("remote")
 
 
     else:
         keyword=request.args.get("keyword")
         location=request.args.get("location")
 
-
     buscar.jobs(keyword=keyword,location=location)
-    buscar.filters()
-    buscar.more_jobs()
+    
+    if not easy_apply and remote:
+        buscar.filters(remote)
+    elif not remote and easy_apply:
+        buscar.filters(easy_apply)
+    elif not remote and not easy_apply:
+        buscar.filters()
+    else:
+        buscar.filters(easy_apply,remote)
+    #buscar.more_jobs()
     buscar.apply()
 

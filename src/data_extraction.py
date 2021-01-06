@@ -68,7 +68,7 @@ class Linkedin:
         key_city.send_keys('\n')
         time.sleep(0.3)
 
-    def filters(self):
+    def filters(self,*filters):
         #We filter for the latest jobs
         find = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "//button[@aria-label='Filtro «Fecha de publicación». Al hacer clic en este botón, se muestran todas las opciones del filtro «Fecha de publicación».']"))
@@ -83,12 +83,18 @@ class Linkedin:
         actions.move_to_element_with_offset(self.driver.find_element(By.XPATH, "//input[@name='Últimas 24 horas']"), 5,5).click().perform()
         time.sleep(0.3)
 
-        #We filter for jobs with the the easy application option 
-        funcionalities=self.driver.find_element(By.XPATH, "//button[@aria-label='Todos los filtros']")
-        funcionalities.click()
+        #We filter for jobs with the easy application option if it is so selected 
+        if "easy_apply" in filters:
+            funcionalities=self.driver.find_element(By.XPATH, "//button[@aria-label='Todos los filtros']")
+            funcionalities.click()
+            actions = ActionChains(self.driver)
+            actions.move_to_element_with_offset(self.driver.find_element(By.XPATH, "//input[@name='Solicitud sencilla']"), 3,-3).click().perform()
 
-        actions = ActionChains(self.driver)
-        actions.move_to_element_with_offset(self.driver.find_element(By.XPATH, "//input[@name='Solicitud sencilla']"), 3,3).click().perform()
+        #We filter for jobs with than can be developed remotely if it's so selected
+        if "remote" in filters:
+            actions = ActionChains(self.driver)
+            actions.move_to_element_with_offset(self.driver.find_element(By.XPATH, "//input[@name='Remotamente']"), 3,-3).click().perform()
+
 
 
     def more_jobs(self):
