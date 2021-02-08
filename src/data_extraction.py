@@ -37,7 +37,10 @@ class Linkedin:
         username.send_keys(os.getenv("linkedin_user"))
         password.send_keys(os.getenv('linkedin_password'))
         time.sleep(0.3)
-        button=self.driver.find_element(By.XPATH,'//*[@id="app__container"]/main/div[3]/form/div[3]/button')
+        #button=self.driver.find_element(By.XPATH,'//*[@id="app__container"]/main/div[3]/form/div[3]/button')
+        button=self.driver.find_element(By.XPATH, "//button[@aria-label='Iniciar sesión']")
+
+
         
         time.sleep(0.5)
         button.click()
@@ -88,12 +91,12 @@ class Linkedin:
             funcionalities=self.driver.find_element(By.XPATH, "//button[@aria-label='Todos los filtros']")
             funcionalities.click()
             actions = ActionChains(self.driver)
-            actions.move_to_element_with_offset(self.driver.find_element(By.XPATH, "//input[@name='Solicitud sencilla']"), 3,-3).click().perform()
+            actions.move_to_element_with_offset(self.driver.find_element(By.XPATH, "//input[@name='Solicitud sencilla']"),3,3).click().perform()
 
         #We filter for jobs with than can be developed remotely if it's so selected
         if "remote" in filters:
             actions = ActionChains(self.driver)
-            actions.move_to_element_with_offset(self.driver.find_element(By.XPATH, "//input[@name='Remotamente']"), 3,-3).click().perform()
+            actions.move_to_element_with_offset(self.driver.find_element(By.XPATH, "//input[@name='Remotamente']"), 5,5).click().perform()
 
 
 
